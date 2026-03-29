@@ -149,3 +149,7 @@ plt.suptitle("Cluster Profiles", fontsize=15, y=1.02)
 plt.tight_layout()
 plt.savefig(f"{PLOTS_DIR}/18_cluster_profiles.png", dpi=150, bbox_inches="tight")
 plt.show()
+
+trainings.to_csv("running_clean_with_clusters.csv", index=False)
+
+
