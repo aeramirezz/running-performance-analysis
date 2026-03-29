@@ -38,7 +38,7 @@ running-performance-analysis/
 ├── scripts/
 │   ├── 00_parse_xml.py             # Extract running sessions from Apple Health XML
 │   ├── 01_cleaning.py              # Data cleaning and feature engineering
-│   ├── 02_eda.py                   # Exploratory data analysis (20 plots)
+│   ├── 02_eda.py                   # Exploratory data analysis (15 plots)
 │   ├── 03_gpx_parser.py            # Extract GPS routes and track points from GPX files
 │   ├── 04_build_database.py        # Build relational SQLite database (5 tables)
 │   ├── 05_queries.sql              # Analytical SQL queries
@@ -57,10 +57,13 @@ running-performance-analysis/
 
 ```
 Apple Health XML → 00_parse_xml.py → 01_cleaning.py → 02_eda.py
-GPX Files        → 03_gpx_parser.py ↘
-                                      04_build_database.py → 05_queries.sql
-                                      06_clustering.py
-                                      07_calorie_prediction.py
+                                                     ↘
+GPX Files        → 03_gpx_parser.py                   04_build_database.py → 05_queries.sql
+                                                     ↗
+                                    01_cleaning.py
+
+06_clustering.py        → uses running_clean.csv
+07_calorie_prediction.py → uses running_clean.csv
 ```
 
 ---
@@ -70,7 +73,7 @@ GPX Files        → 03_gpx_parser.py ↘
 - [x] Data extraction from Apple Health XML (444 sessions parsed)
 - [x] GPS route extraction from 354 GPX files (525,000+ track points)
 - [x] Data cleaning and feature engineering
-- [x] Exploratory data analysis — 20 visualizations across 4 thematic blocks
+- [x] Exploratory data analysis — 15 visualizations across 4 thematic blocks
 - [x] Relational database — 5 tables, SQLite, joined by run_id
 - [x] Analytical SQL queries — 10 queries across volume, performance and routes
 - [x] K-Means clustering — 4 session types identified (Short & Intense, Easy, Treadmill, Long Run)
@@ -81,7 +84,7 @@ GPX Files        → 03_gpx_parser.py ↘
 
 ## Key Findings
 
-- **Volume:** Training peaked in 2021 during half marathon preparation, nearly disappeared in 2022 due to injury, and has been gradually recovering since 2023.
+- **Volume:** Training peaked in 2021 during half marathon preparation, nearly disappeared in 2022 due to injury, picked back up in late 2023 with full marathon training (longest runs of the dataset), and has shifted toward shorter sessions since the injury forced another reset in early 2024.
 - **Patterns:** Most runs happen on weekdays in the afternoon. Saturday is the day for long runs.
 - **Clusters:** K-Means identified 4 distinct session types without any manual labeling — Short & Intense, Easy aerobic, Treadmill, and Long Run.
 - **Prediction:** A Random Forest model predicts active calories burned with a mean absolute error of just 10 kcal, using only distance, pace, elevation, and temperature as inputs.
