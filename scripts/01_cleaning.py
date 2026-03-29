@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # --- LOAD DATA ----------------------------------------------------------------
-trainings = pd.read_csv("running_data_v2.csv")
+trainings = pd.read_csv("data/processed/running_data.csv")
 
 # --- DROP COLUMNS -------------------------------------------------------------
 trainings = trainings.drop([

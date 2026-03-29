@@ -3,8 +3,8 @@ import pandas as pd
 import os
 
 # --- CONFIG -------------------------------------------------------------------
-XML_PATH    = "exportar.xml"
-OUTPUT_PATH = "running_data_v2.csv"
+XML_PATH    = "data/raw/exportar.xml"
+OUTPUT_PATH = "data/processed/running_data.csv"
 
 # --- LOAD XML -----------------------------------------------------------------
 tree = ET.parse(XML_PATH)
