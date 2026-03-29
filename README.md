@@ -14,13 +14,13 @@ Over the years, without really thinking about it, my Apple Watch recorded every 
 
 A full data analysis pipeline applied to personal running data exported from Apple Health (2019–2026). The goal is to explore performance trends, identify training patterns, and build predictive models using the same tools and workflow a data analyst would use in a professional setting.
 
-**Stack:** Python · SQL · Power BI
+**Stack:** Python · SQLite · SQL · scikit-learn · Power BI
 
 ---
 
 ## Dataset
 
-Personal running data exported from Apple Health, recorded via Apple Watch between May 2019 and March 2026. After cleaning, the dataset contains 429 running sessions and 19 features including pace, distance, heart rate, elevation, weather conditions, and pause data.
+Personal running data exported from Apple Health, recorded via Apple Watch between May 2019 and March 2026. After cleaning, the dataset contains 429 running sessions with 19 features including pace, distance, heart rate, elevation, weather conditions, and pause data. GPS route data was extracted from 354 GPX files, adding over 500,000 GPS points to the analysis.
 
 Raw data is not included in this repository for privacy reasons.
 
@@ -32,36 +32,56 @@ Raw data is not included in this repository for privacy reasons.
 running-performance-analysis/
 │
 ├── data/
-│   ├── raw/              # Original export from Apple Health (not tracked)
-│   └── processed/        # Cleaned and enriched dataset
+│   ├── raw/                        # Original Apple Health export (not tracked)
+│   └── processed/                  # Cleaned datasets and SQLite database
 │
 ├── scripts/
-│   ├── 01_cleaning.py    # Data cleaning and feature engineering
-│   ├── 02_eda.py         # Exploratory data analysis
-│   ├── 03_clustering.py  # Unsupervised clustering of training sessions
-│   └── 04_model.py       # Predictive model (pace forecasting)
+│   ├── 00_parse_xml.py             # Extract running sessions from Apple Health XML
+│   ├── 01_cleaning.py              # Data cleaning and feature engineering
+│   ├── 02_eda.py                   # Exploratory data analysis (20 plots)
+│   ├── 03_gpx_parser.py            # Extract GPS routes and track points from GPX files
+│   ├── 04_build_database.py        # Build relational SQLite database (5 tables)
+│   ├── 05_queries.sql              # Analytical SQL queries
+│   ├── 06_clustering.py            # K-Means clustering and PCA visualization
+│   └── 07_calorie_prediction.py    # Random Forest calorie prediction models
 │
-├── dashboard/            # Power BI dashboard files
+├── plots/                          # All generated visualizations
+├── dashboard/                      # Power BI dashboard files
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
+## Pipeline
+
+```
+Apple Health XML → 00_parse_xml.py → 01_cleaning.py → 02_eda.py
+GPX Files        → 03_gpx_parser.py ↘
+                                      04_build_database.py → 05_queries.sql
+                                      06_clustering.py
+                                      07_calorie_prediction.py
+```
+
+---
+
 ## Analysis Roadmap
 
-- [x] Data extraction from Apple Health XML
+- [x] Data extraction from Apple Health XML (444 sessions parsed)
+- [x] GPS route extraction from 354 GPX files (525,000+ track points)
 - [x] Data cleaning and feature engineering
-- [ ] Exploratory data analysis (EDA)
-- [ ] Clustering of training session types
-- [ ] Pace prediction model
+- [x] Exploratory data analysis — 20 visualizations across 4 thematic blocks
+- [x] Relational database — 5 tables, SQLite, joined by run_id
+- [x] Analytical SQL queries — 10 queries across volume, performance and routes
+- [x] K-Means clustering — 4 session types identified (Short & Intense, Easy, Treadmill, Long Run)
+- [x] Calorie prediction — two Random Forest models (R² = 0.97 / 0.95)
 - [ ] Power BI dashboard
 
 ---
 
-## Key Questions
+## Key Findings
 
-- How has my pace and endurance evolved over 7 years?
-- Do I perform better in certain conditions (weather, time of day, day of week)?
-- Can unsupervised learning identify distinct training patterns in my runs?
-- Can I predict my pace based on recent training data?
+- **Volume:** Training peaked in 2021 during half marathon preparation, nearly disappeared in 2022 due to injury, and has been gradually recovering since 2023.
+- **Patterns:** Most runs happen on weekdays in the afternoon. Saturday is the day for long runs.
+- **Clusters:** K-Means identified 4 distinct session types without any manual labeling — Short & Intense, Easy aerobic, Treadmill, and Long Run.
+- **Prediction:** A Random Forest model predicts active calories burned with a mean absolute error of just 10 kcal, using only distance, pace, elevation, and temperature as inputs.
