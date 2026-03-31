@@ -79,7 +79,7 @@ running-performance-analysis/
 
 The Power BI dashboard covers three analytical pages: an overview of 8 years of training volume and pace trends, a performance deep-dive with cluster analysis, and a heart rate and weather conditions breakdown. A static export is available in [`dashboard/Running_Performance_Dashboard.pdf`](dashboard/Running_Performance_Dashboard.pdf).
 
-The interactive GPS map renders all 258 outdoor running routes across Lima, color-coded by session type (Short & Intense, Easy, Long Run). Open [`dashboard/running_map.html`](dashboard/running_map.html) in any browser — no installation required.
+The interactive GPS map renders all 258 outdoor running routes across Lima, color-coded by session type (Short & Intense, Easy, Long Run). Open it directly in your browser: [Running Map — Lima](https://aeramirezz.github.io/running-performance-analysis/dashboard/running_map.html)
 
 ---
 
