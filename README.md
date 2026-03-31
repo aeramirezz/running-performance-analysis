@@ -6,7 +6,7 @@ I started running back in high school, but it wasn't until 2020 that it truly be
 
 What started as a way to cope slowly turned into something more. A habit, a discipline, and eventually a passion. I ran my first half marathon and started training for a full one, until an injury forced me to stop and reset. Today I run for the joy of it, not for competition. It keeps me grounded, and someday I'd like to complete that marathon just to prove I can.
 
-Over the years, without really thinking about it, my Apple Watch recorded every single one of those runs. Pace, heart rate, distance, elevation, weather conditions. Nearly 7 years of data, sitting there. This project is my attempt to make sense of it.
+Over the years, without really thinking about it, my Apple Watch recorded every single one of those runs. Pace, heart rate, distance, elevation, weather conditions. Nearly 8 years of data, sitting there. This project is my attempt to make sense of it.
 
 ---
 
@@ -14,7 +14,7 @@ Over the years, without really thinking about it, my Apple Watch recorded every 
 
 A full data analysis pipeline applied to personal running data exported from Apple Health (2019–2026). The goal is to explore performance trends, identify training patterns, and build predictive models using the same tools and workflow a data analyst would use in a professional setting.
 
-**Stack:** Python · SQLite · SQL · scikit-learn · Power BI
+**Stack:** Python · SQLite · SQL · scikit-learn · Power BI · Folium
 
 ---
 
@@ -43,10 +43,11 @@ running-performance-analysis/
 │   ├── 04_build_database.py        # Build relational SQLite database (5 tables)
 │   ├── 05_queries.sql              # Analytical SQL queries
 │   ├── 06_clustering.py            # K-Means clustering and PCA visualization
-│   └── 07_calorie_prediction.py    # Random Forest calorie prediction models
+│   ├── 07_calorie_prediction.py    # Random Forest calorie prediction models
+│   └── 08_maps.py                  # Interactive route map with Folium
 │
 ├── plots/                          # All generated visualizations
-├── dashboard/                      # Power BI dashboard files
+├── dashboard/                      # Power BI dashboard (PDF) and interactive map (HTML)
 ├── .gitignore
 └── README.md
 ```
@@ -63,7 +64,8 @@ Apple Health XML → 00_parse_xml.py → 01_cleaning.py → 02_eda.py
 GPX Files        → 03_gpx_parser.py ──────────────────────────────────────────
                                                |
                                                ├──────────────────→ 06_clustering.py
-                                               └──────────────────→ 07_calorie_prediction.py
+                                               ├──────────────────→ 07_calorie_prediction.py
+                                               └──────────────────→ 08_maps.py
 ```
 
 ---
@@ -78,7 +80,16 @@ GPX Files        → 03_gpx_parser.py ──────────────
 - [x] Analytical SQL queries — 10 queries across volume, performance and routes
 - [x] K-Means clustering — 4 session types identified (Short & Intense, Easy, Treadmill, Long Run)
 - [x] Calorie prediction — two Random Forest models (R² = 0.97 / 0.95)
-- [ ] Power BI dashboard
+- [x] Power BI dashboard — 3 pages, 12 visualizations (see `dashboard/`)
+- [x] Interactive GPS map — 258 outdoor routes across Lima, filterable by session type (see `dashboard/running_map.html`)
+
+---
+
+## Dashboard
+
+The Power BI dashboard covers three analytical pages: an overview of 8 years of training volume and pace trends, a performance deep-dive with cluster analysis, and a heart rate and weather conditions breakdown. A static export is available in [`dashboard/Running_Performance_Dashboard.pdf`](dashboard/Running_Performance_Dashboard.pdf).
+
+The interactive GPS map renders all 258 outdoor running routes across Lima, color-coded by session type (Short & Intense, Easy, Long Run). Open [`dashboard/running_map.html`](dashboard/running_map.html) in any browser — no installation required.
 
 ---
 

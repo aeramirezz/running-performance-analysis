@@ -151,5 +151,5 @@ plt.savefig(f"{PLOTS_DIR}/18_cluster_profiles.png", dpi=150, bbox_inches="tight"
 plt.show()
 
 trainings.to_csv("running_clean_with_clusters.csv", index=False)
-
+trainings.to_csv("running_clean_with_clusters_powerbi.csv", index=False, decimal=',')
 

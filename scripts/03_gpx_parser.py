@@ -12,6 +12,7 @@ routes = []
 points = []
 
 gpx_files = [f for f in os.listdir(GPX_FOLDER) if f.endswith(".gpx")]
+print(f"Found {len(gpx_files)} GPX files. Parsing...")
 
 for filename in sorted(gpx_files):
     filepath = os.path.join(GPX_FOLDER, filename)
@@ -105,3 +106,9 @@ df_points = pd.DataFrame(points)
 
 df_routes.to_csv(ROUTES_OUTPUT, index=False)
 df_points.to_csv(POINTS_OUTPUT, index=False)
+
+print(f"\nDone.")
+print(f"  Routes parsed  : {len(df_routes)}")
+print(f"  Total points   : {len(df_points)}")
+print(f"  Saved to       : {ROUTES_OUTPUT}")
+print(f"  Saved to       : {POINTS_OUTPUT}")
