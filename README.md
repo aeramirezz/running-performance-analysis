@@ -56,17 +56,7 @@ running-performance-analysis/
 
 ## Pipeline
 
-```
-Apple Health XML → 00_parse_xml.py → 01_cleaning.py → 02_eda.py
-                                               |
-                                               ├──────────────────→ 04_build_database.py → 05_queries.sql
-                                               |                              ↑
-GPX Files        → 03_gpx_parser.py ──────────────────────────────────────────
-                                               |
-                                               ├──────────────────→ 06_clustering.py
-                                               ├──────────────────→ 07_calorie_prediction.py
-                                               └──────────────────→ 08_maps.py
-```
+![Pipeline](plots/pipeline.png)
 
 ---
 
